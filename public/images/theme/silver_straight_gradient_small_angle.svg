@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="792.17218"
+   height="78.41777"
+   viewBox="0 0 209.59556 20.748035"
+   version="1.1"
+   id="svg2312"
+   xml:space="preserve"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+     id="defs2309"><linearGradient
+       id="GoldToSilver"><stop
+         style="stop-color:#8d8d8d;stop-opacity:1;"
+         offset="0.09705947"
+         id="stop2441" /><stop
+         style="stop-color:#aeaeae;stop-opacity:1;"
+         offset="0.44055894"
+         id="stop6981" /><stop
+         style="stop-color:#bababa;stop-opacity:1;"
+         offset="0.59398472"
+         id="stop6977" /><stop
+         style="stop-color:#e0e0e0;stop-opacity:1;"
+         offset="0.66279376"
+         id="stop6971" /><stop
+         style="stop-color:#bababa;stop-opacity:1;"
+         offset="0.73314971"
+         id="stop6973" /><stop
+         style="stop-color:#b8b8b8;stop-opacity:1;"
+         offset="0.78366774"
+         id="stop6979" /><stop
+         style="stop-color:#8c8c8c;stop-opacity:1;"
+         offset="0.98033917"
+         id="stop2443" /></linearGradient><linearGradient
+       xlink:href="#GoldToSilver"
+       id="linearGradient2217"
+       x1="-0.15457869"
+       y1="50.187279"
+       x2="209.44098"
+       y2="50.187279"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,1.4978067,0.15457868,-86.386749)" /></defs><path
+     id="rect1046"
+     style="fill:url(#linearGradient2217);fill-opacity:1;stroke-width:1.10146;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:7.2;paint-order:markers fill stroke"
+     d="M 0,-1.5232122e-6 209.59556,2.1579325 V 17.581847 L 0,20.748035 Z" /></svg>

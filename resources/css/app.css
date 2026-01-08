@@ -1,0 +1,32 @@
+@import "../../public/theme/fonts.css";
+@import "../../public/theme/colors.css";
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-title: var(--font-one);
+    --color-primary: var(--color-one);
+    --color-secondary: var(--color-two);
+    --color-tertiary: var(--color-three);
+    --color-alt-black: var(--color-new-black);
+    --color-alt-white: var(--color-new-white);
+}
+
+.scrollbar-hide::-webkit-scrollbar  {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.fade-bottom {
+    mask-image: linear-gradient(180deg, rgba(0,0,0,1) 98%, rgba(0,0,0,0) 100%);
+    -webkit-mask: linear-gradient(180deg, rgba(0,0,0,1) 98%, rgba(0,0,0,0) 100%);
+    mask: linear-gradient(180deg, rgba(0,0,0,1) 98%, rgba(0,0,0,0) 100%);
+}
