@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('legal_pages', function (Blueprint $table) {
+        Schema::create('labels', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('content');
+            $table->string('name')->unique();
+            $table->string('image')->nullable();
+            $table->boolean('is_sublabel')->default(true);
+            $table->unsignedInteger('sublabel_order')->nullable();
+            $table->string('env')->default(config('app.env'));
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('legal_pages');
+        Schema::dropIfExists('labels');
     }
 };

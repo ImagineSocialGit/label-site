@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Artist;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,6 +14,20 @@ return new class extends Migration
     {
         Schema::create('music', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Artist::class)->constrained()->onDelete('cascade');
+            $table->foreignId('staging_music_id')->references('id')->on('music')->nullable();
+            $table->string('title');
+            $table->string('artwork');
+            $table->string('artwork_alt_text')->nullable();
+            $table->string('banner_image')->nullable();
+            $table->string('banner_image_alt_text')->nullable();
+            $table->boolean('include_in_banner')->default(false);
+            $table->boolean('is_holiday_release')->default(false);
+            $table->string('link')->nullable();
+            $table->date('released');
+            $table->date('presave')->nullable();
+            $table->boolean('from_api')->default(false);
+            $table->string('env')->default(config('app.env'));
             $table->timestamps();
         });
     }

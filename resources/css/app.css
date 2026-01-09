@@ -26,7 +26,7 @@
 }
 
 .fade-bottom {
-    mask-image: linear-gradient(180deg, rgba(0,0,0,1) 98%, rgba(0,0,0,0) 100%);
-    -webkit-mask: linear-gradient(180deg, rgba(0,0,0,1) 98%, rgba(0,0,0,0) 100%);
-    mask: linear-gradient(180deg, rgba(0,0,0,1) 98%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(180deg, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 91%);
+    -webkit-mask: linear-gradient(180deg, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 91%);
+    mask: linear-gradient(180deg, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 91%);
 }

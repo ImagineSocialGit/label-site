@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('favicons', function (Blueprint $table) {
             $table->id();
+            $table->string('apple_touch_icon')->nullable();
+            $table->string('favicon_icon')->nullable();
+            $table->string('favicon_svg')->nullable();
+            $table->string('favicon_96x96')->nullable();
+            $table->string('manifest_192x192')->nullable();
+            $table->string('manifest_512x512')->nullable();
+            $table->string('site_manifest')->nullable();
+            $table->string('env')->default(config('app.env'));
             $table->timestamps();
         });
     }

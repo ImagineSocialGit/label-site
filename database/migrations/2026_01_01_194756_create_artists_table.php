@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Label;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,6 +14,18 @@ return new class extends Migration
     {
         Schema::create('artists', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Label::class)->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('desktop_image')->nullable();
+            $table->string('desktop_image_position')->nullable();
+            $table->string('mobile_image')->nullable();
+            $table->string('mobile_image_position')->nullable();
+            $table->string('url')->nullable();
+            $table->text('about')->nullable();
+            $table->unsignedInteger('order');
+            $table->string('token')->nullable();
+            $table->boolean('requires_refresh')->default(false);
+            $table->string('env')->default(config('app.env'));
             $table->timestamps();
         });
     }

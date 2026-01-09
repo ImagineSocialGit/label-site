@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('site_options', function (Blueprint $table) {
             $table->id();
             $table->enum('hero_content', ['artist_grid', 'artist_scroll', 'music_scroll', 'news_scroll'])->default('artist_scroll');
+            $table->string('whole_site_background')->nullable();
+            $table->boolean('is_mobile')->default(false);
             $table->timestamps();
         });
     }

@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Artist;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -13,6 +14,17 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Artist::class)->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->string('subtitle_one')->nullable();
+            $table->string('subtitle_two')->nullable();
+            $table->string('image')->nullable();
+            $table->string('image_alt_text')->nullable();
+            $table->text('body');
+            $table->dateTime('publish_date');
+            $table->boolean('from_api')->default(false);
+            $table->string('env')->default(config('app.env'));
             $table->timestamps();
         });
     }
