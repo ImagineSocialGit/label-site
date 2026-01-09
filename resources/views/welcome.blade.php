@@ -3,12 +3,12 @@
 
         <img class="absolute w-full object-cover drop-shadow-xl mt-150" src="/images/theme/scratched_silver_square_bar.png" alt="">
 
-        <div class="relative px-12 lg:px-0 lg:max-w-5xl xl:max-w-6xl shadow-xl w-full overflow-hidden mx-auto lg:h-180">
-            <img class="w-full h-full object-[50%_10%] object-cover" src="{{ config('filesystems.disks.spaces.url') }} + artist.desktop_image" alt="">
+        <a :href="'/' + currentArtist.slug" class="block relative px-12 lg:px-0 lg:max-w-5xl xl:max-w-6xl shadow-xl w-full overflow-hidden mx-auto lg:h-180">
+            <img class="w-full h-full object-[50%_10%] object-cover" src="{{ config('filesystems.disks.spaces.url') }} + currentArtist.desktop_image" alt="">
             <div class="absolute flex items-center justify-center bottom-0 h-24 w-full px-12 lg:px-0 bg-linear-to-t from-black from-10% via-[#000000a6] via-80% to-transparent z-10">
                 <span class="w-fit text-5xl font-serif text-secondary" x-text="currentArtist.name"></span>
             </div>
-        </div>
+        </a>
     
         <div class="">
             <div class="relative h-fit flex flex-wrap justify-center gap-2 lg:gap-12 max-w-6xl mx-auto pt-12 z-20">

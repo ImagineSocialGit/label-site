@@ -82,9 +82,12 @@ class InitialSeeder extends Seeder
         $order = 1;
 
         foreach($artists as $artist){
+            $slug = str_replace(' ', '-', $artist['name']);
+            $slug = strtolower($slug);
             \App\Models\Artist::create([
                 'label_id' => $artist['label_id'],
                 'name' => $artist['name'],
+                'slug' => $slug,
                 'url' => $artist['url'],
                 'order' => $order++,
             ]);

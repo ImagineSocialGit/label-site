@@ -38,7 +38,7 @@
         {{ $slot }}
     </main>
     @else
-    <main class="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center min-h-screen max-h-fit">
+    <main class="absolute top-0 bottom-0 left-0 right-0 flex flex-col items-center justify-center min-h-screen h-fit overflow-hidden">
         <img class="absolute top-0 bottom-0 left-0 right-0 h-full w-screen object-cover object-top -z-10" src="/images/theme/qhmg_dark_bg.png" alt="">
         <div class="grow w-full flex flex-col items-center justify-center">
             {{ $slot }}

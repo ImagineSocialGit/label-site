@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Label::class)->constrained()->onDelete('cascade');
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('desktop_image')->nullable();
             $table->string('desktop_image_position')->nullable();
             $table->string('mobile_image')->nullable();
