@@ -5,14 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Artist extends Model
 {
     protected $guarded = [];
 
-    public function socials() : HasOne
+    public function label() : BelongsTo
     {
-        return $this->hasOne(Socials::class);
+        return $this->belongsTo(Label::class);
+    }
+
+    public function socials() : HasMany
+    {
+        return $this->hasMany(Socials::class);
     }
 
     public function posts() : HasMany

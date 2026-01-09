@@ -1,3 +1,3 @@
-<x-layout title="Add Artist" :universalData="$univseralData">
+<x-layout title="Add Artist" :universalData="$universalData">
     
 </x-layout>

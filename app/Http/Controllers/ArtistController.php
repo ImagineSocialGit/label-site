@@ -12,12 +12,26 @@ use Illuminate\Support\Facades\Storage;
 class ArtistController extends Controller
 {
 
+    public function index(){
+        $universalData = new UniversalData();
+
+        $artists = Artist::all();
+
+        return view('artists.index', [
+            'universalData' => $universalData,
+            'artists' => $artists,
+        ]);
+    }
+
     public function show(Artist $artist){
         $universalData = new UniversalData();
 
+        $featuredRelease = $this->getMusic($artist->url);
+
         return view('artists.show', [
-            'univseralData' => $universalData,
+            'universalData' => $universalData,
             'artist' => $artist,
+            'featuredRelease' => $featuredRelease,
         ]);
     }
 
@@ -27,7 +41,7 @@ class ArtistController extends Controller
         $labels = Label::all();
 
         return view('artists.create', [
-            'univseralData' => $universalData,
+            'universalData' => $universalData,
             'labels' => $labels,
         ]);
     }
@@ -38,7 +52,7 @@ class ArtistController extends Controller
         $labels = Label::all();
 
         return view('artists.edit', [
-            'univseralData' => $universalData,
+            'universalData' => $universalData,
             'artist' => $artist,
             'labels' => $labels,
         ]);
@@ -140,5 +154,19 @@ class ArtistController extends Controller
         $artist->update($attributes);
 
         return redirect('/' . $artist->slug)->with('success', 'Artist Updated');
+    }
+
+    protected function getMusic(string $url){
+        $ch = curl_init($url . '/api/music');
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $return = curl_exec($ch);
+        curl_close($ch);
+
+        $decode = json_decode($return);
+        $featuredMusic = (array)$decode;
+        
+        return $featuredMusic;
     }
 }

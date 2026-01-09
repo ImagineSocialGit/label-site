@@ -13,7 +13,7 @@ class SessionsController extends Controller
         $universalData = new UniversalData(true);
 
         return view('sessions.create', [
-            'univseralData' => $universalData
+            'universalData' => $universalData
         ]);
     }
 

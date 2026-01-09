@@ -1,4 +1,4 @@
-<x-layout title="Edit Artist" :universalData="$univseralData">
+<x-layout title="Edit Artist" :universalData="$universalData">
     <div class="bg-white w-full">{{var_dump($errors)}}</div>
     <div class="pt-72 w-full h-full max-w-3xl">
         <h1 class="text-center text-secondary text-4xl font-tai uppercase font-bold pb-12">Edit {{$artist->name}}</h1>
@@ -12,7 +12,7 @@
             <input class="px-2 py-1 bg-white" type="text" name="name" value="{{ $artist->name }}">
             <select class="px-2 py-1 bg-white" name="label_id" id="label_id">
                 @foreach ($labels as $label)
-                    <option value="{{ $label->id }}">{{$label->name}}</option>
+                    <option value="{{ $label->id }}" {{ $artist->label_id == $label->id ? 'selected' : '' }}>{{$label->name}}</option>
                 @endforeach            
             </select>
             <input class="px-2 py-1 bg-white" type="text" name="url" value="{{ $artist->url }}">

@@ -1,4 +1,4 @@
-<x-layout title="Log In" :universalData="$univseralData">
+<x-layout title="Log In" :universalData="$universalData">
         
         @auth
         <div class="mx-auto text-4xl text-primary">You're already logged in.</div>

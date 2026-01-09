@@ -6,10 +6,10 @@
     </div>
     <div x-show="showMenu"
         x-transition:enter.opacity.0.delay.300ms.duration.400ms
-        x-transition:leave.opacity.0.duration.400ms        
+        x-transition:leave.opacity.0.duration.400ms
         class="w-48 pl-8 pb-36 flex flex-col space-y-3 bg-linear-to-b from-secondary from-55% to-transparent">
-        <a href="/" class="w-fit mt-8 text-2xl font-bold text-alt-black hover:text-primary duration-300">Home</a>
-        <a href="/news" class="w-fit text-2xl font-bold text-alt-black hover:text-primary duration-300">Artists</a>
-        <a href="/#about" class="w-fit text-2xl font-bold text-alt-black hover:text-primary duration-300">About</a>
+        <a href="/" class="w-fit mt-8 text-2xl font-bold text-alt-black hover:opacity-60 duration-300">Home</a>
+        {{-- <a href="/news" class="w-fit text-2xl font-bold text-alt-black hover:opacity-60 duration-300">Artists</a> --}}
+        <a href="/#about" class="w-fit text-2xl font-bold text-alt-black hover:opacity-60 duration-300">About</a>
     </div>
 </div>
