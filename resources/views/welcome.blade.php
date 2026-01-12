@@ -15,12 +15,11 @@
             @endforeach
         </a>
 
-        <a :href="'/' + currentArtist.slug" class="block lg:hidden group relative px-12 lg:px-0 max-w-md shadow-xl w-full overflow-hidden mx-auto lg:h-180">
+        <a :href="'/' + currentArtist.slug" class="block lg:hidden group relative px-2 max-w-md shadow-xl w-full overflow-hidden mx-auto h-64">
             @foreach ($artists as $artist)
-                <img x-show="index == {{ $loop->iteration }}" x-transition.opacity.duration.500ms class="absolute top-0 bottom-0 w-full h-full object-[50%_10%] object-cover" src="{{ config('filesystems.disks.spaces.url') . $artist->desktop_image }}" alt="">
-                <div x-show="index == {{ $loop->iteration }}" x-transition.opacity.duration.500ms class="absolute flex flex-col items-center justify-center -bottom-12 group-hover:bottom-0 h-32 w-full px-12 lg:px-0 bg-linear-to-t from-black from-70% via-[#000000a6] via-90% to-transparent overflow-hidden duration-300 z-10">
-                    <span class="absolute top-5 w-fit text-5xl font-serif text-secondary">{{$artist->name}}</span>
-                    <span class="absolute bottom-2 w-fit text-xl font-serif text-secondary">{{$artist->snippedAbout()}}...</span>
+                <img x-show="index == {{ $loop->iteration }}" x-transition.opacity.duration.500ms class="absolute top-0 bottom-0 w-full h-full object-center object-cover" src="{{ config('filesystems.disks.spaces.url') . $artist->desktop_image }}" alt="">
+                <div x-show="index == {{ $loop->iteration }}" x-transition.opacity.duration.500ms class="absolute flex flex-col items-center justify-center bottom-0 group-hover:bottom-0 h-16 w-full px-12 lg:px-0 bg-linear-to-t from-black from-70% via-[#000000a6] via-90% to-transparent overflow-hidden duration-300 z-10">
+                    <span class="absolute bottom-2 w-fit text-sm font-serif text-secondary">{{$artist->snippedAbout()}}... <u>Tap to read more</u></span>
                 </div>
             @endforeach
         </a>
