@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="bg-alt-black">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="bg-alt-black h-full">
     <x-head :title="$title" :metaData="$universalData->metaData" :favicon="$universalData->favicon" />
 
     <div x-data="{hide: false}" x-show="!hide" x-init="setTimeout(() => hide = true, 200)" x-transition.opacity.duration.400ms class="fixed bg-alt-black top-0 bottom-0 left-0 right-0 z-50"></div>
     
     @if (request()->is('/'))
-    <img class="absolute top-0 bottom-0 left-0 right-0 fade-bottom -z-10" src="/images/theme/qhmg_dark_bg.png" alt="">
+    <img class="fixed lg:absolute top-0 bottom-0 left-0 right-0 w-full h-screen object-top lg:h-fit fade-bottom -z-10" src="/images/theme/qhmg_dark_bg.png" alt="">
     @endif
 
     <div class="relative z-40">
@@ -21,21 +21,29 @@
         setTimeout(() => showLogo = true, 700)"
         class="relative w-full {{ $heroMobileHeight }} {{ $heroHeight }} flex flex-col z-10">
         
-        <div class="flex justify-center items-end space-x-16 pt-8">
+        <div class="flex justify-center items-end lg:space-x-16 pt-8">
             @if (request()->is('/'))
-            <div x-show="showBackground" x-cloak x-transition.delay.800ms.duration.1900ms.origin.top class="w-64 h-36 z-0">
+            <div x-show="showBackground" x-cloak x-transition.delay.800ms.duration.1900ms.origin.top class="hidden lg:block w-64 h-36 z-0">
                 <img class="mx-auto w-64" src="/images/theme/quartzhilllogo_white.png" alt="">
             </div>
             @endif
-            <div x-show="showBackground" x-cloak x-transition.duration.1500ms.origin.top class="z-0">
+            <div x-show="showBackground" x-cloak x-transition.duration.1500ms.origin.top class="z-0 flex lg:block h-auto lg:h-72 flex-col space-y-4 lg:space-y-0">
                 @if (request()->is('/'))
-                <img class="max-w-xl mx-auto" src="/images/theme/qhmg_logo_white.svg" alt="">
+                <img class="max-w-xs lg:max-w-xl mx-auto" src="/images/theme/qhmg_logo_white.svg" alt="">
+                <div class="flex lg:hidden space-x-12 justify-center items-center">
+                    <div class="w-36">
+                        <img class="mx-auto" src="/images/theme/quartzhilllogo_white.png" alt="">
+                    </div>
+                    <div class="w-36">
+                        <img class="mx-auto w-24" src="/images/theme/stonecountrylogo_white.png" alt="">
+                    </div>
+                </div>
                 @else
                 <img class="max-w-sm mx-auto" src="/images/theme/qhmg_logo_white.svg" alt="">
                 @endif
             </div>
             @if (request()->is('/'))
-            <div x-show="showBackground" x-cloak x-transition.delay.800ms.duration.1900ms.origin.top class="w-64 h-36 z-0">
+            <div x-show="showBackground" x-cloak x-transition.delay.800ms.duration.1900ms.origin.top class="hidden lg:block w-64 h-36 z-0">
                 <img class="mx-auto w-40" src="/images/theme/stonecountrylogo_white.png" alt="">
             </div>
             @endif

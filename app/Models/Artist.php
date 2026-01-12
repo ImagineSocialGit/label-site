@@ -11,6 +11,13 @@ class Artist extends Model
 {
     protected $guarded = [];
 
+    public function snippedAbout() {
+        
+        $snip = implode(' ', array_slice(explode(' ', str_replace('-', ' ', $this->about)), 0, 18));
+
+        return $snip;
+    }
+
     public function label() : BelongsTo
     {
         return $this->belongsTo(Label::class);
