@@ -18,9 +18,9 @@
             $artistImagePositions = [
                 'joe-nichols' => 'object-[50%_10%]',
                 'matt-cooper' => 'object-center',
-                'ben-gallaher' => 'object-center',
+                'ben-gallaher' => 'object-[50%_10%]',
                 'lakelin-lemmings' => 'object-center',
-                'spencer-hatcher' => 'object-center',
+                'spencer-hatcher' => 'object-[50%_10%]',
                 '2-lane-summer' => 'object-center',
                 'annie-bosko' => 'object-[50%_10%]',
                 'dusty-black' => 'object-center',
