@@ -14,10 +14,21 @@
                 </div>
             @endforeach
         </a>
-
-        <a :href="'/' + currentArtist.slug" class="block lg:hidden group relative px-2 max-w-md shadow-xl w-full overflow-hidden mx-auto h-64">
+        @php
+            $artistImagePositions = [
+                'joe-nichols' => 'object-[50%_10%]',
+                'matt-cooper' => 'object-center',
+                'ben-gallaher' => 'object-center',
+                'lakelin-lemmings' => 'object-center',
+                'spencer-hatcher' => 'object-center',
+                '2-lane-summer' => 'object-center',
+                'annie-bosko' => 'object-[50%_10%]',
+                'dusty-black' => 'object-center',
+            ];
+        @endphp
+        <a :href="'/' + currentArtist.slug" class="block lg:hidden group relative px-2 max-w-md shadow-xl w-full overflow-hidden mx-auto h-80">
             @foreach ($artists as $artist)
-                <img x-show="index == {{ $loop->iteration }}" x-transition.opacity.duration.500ms class="absolute top-0 bottom-0 w-full h-full object-center object-cover" src="{{ config('filesystems.disks.spaces.url') . $artist->desktop_image }}" alt="">
+                <img x-show="index == {{ $loop->iteration }}" x-transition.opacity.duration.500ms class="absolute top-0 bottom-0 w-full h-full {{ $artistImagePositions[$artist->slug] }} object-cover" src="{{ config('filesystems.disks.spaces.url') . $artist->desktop_image }}" alt="">
                 <div x-show="index == {{ $loop->iteration }}" x-transition.opacity.duration.500ms class="absolute flex flex-col items-center justify-center bottom-0 group-hover:bottom-0 h-16 w-full px-12 lg:px-0 bg-linear-to-t from-black from-70% via-[#000000a6] via-90% to-transparent overflow-hidden duration-300 z-10">
                     <span class="absolute bottom-2 w-fit text-sm font-serif text-secondary">{{$artist->snippedAbout()}}... <u>Tap to read more</u></span>
                 </div>
