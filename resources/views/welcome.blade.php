@@ -1,5 +1,5 @@
 <x-layout title="Welcome" :universalData="$universalData">
-    <div x-data="artistGrid({{ count($artists) }}, {{ json_encode($artists) }})" x-init="pageLoad()" class="relative min-h-215 py-24">
+    <div x-data="artistGrid({{ count($artists) }}, {{ json_encode($artists) }})" x-init="pageLoad()" class="relative min-h-215 py-12 lg:py-24">
 
         <img class="lg:hidden absolute w-full object-cover drop-shadow-xl mt-72" src="/images/theme/scratched_silver_square_bar.png" alt="">
 
