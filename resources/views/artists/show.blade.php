@@ -30,7 +30,7 @@
                         'matt-cooper' => 'https://bsb-mgmt-storage.nyc3.cdn.digitaloceanspaces.com/uploads/music/Home-art-442115_21_11_25.jpeg',
                         'ben-gallaher' => 'https://bsb-mgmt-storage.nyc3.cdn.digitaloceanspaces.com/bengallaher.com/uploads/music/Time-art-093009_25_11_25.jpeg',
                         'lakelin-lemmings' => 'https://bsb-mgmt-storage.nyc3.cdn.digitaloceanspaces.com/lakelinlemmings.com/uploads/music/What-Are-We-Doing-art-134708_09_01_26.jpeg',
-                        'spencer-hatcher' => '',
+                        'spencer-hatcher' => 'https://stonecountryrecords.com/images/music/hth_final_cover_min.jpg',
                         '2-lane-summer' => 'https://bsb-mgmt-storage.nyc3.cdn.digitaloceanspaces.com/2lanesummer.com/uploads/iV5lUGOhyCySQmIvVmWVPghUErjpcEroDejctZ2q.jpg',
                         'annie-bosko' => 'https://cloudinary-cdn.ffm.to/s--UIXlkaf5--/f_jpg/https%3A%2F%2Fimagestore.ffm.to%2Flink%2Fa07a47e29ca35962befc049f2a235985.jpeg',
                         'dusty-black' => 'https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/bf/1b/a8/bf1ba82c-eb34-79d5-4e69-e0f2e534f6bd/659459549556.jpg/600x600cc.webp',
