@@ -5,7 +5,7 @@
     <div x-data="{hide: false}" x-show="!hide" x-init="setTimeout(() => hide = true, 200)" x-transition.opacity.duration.400ms class="fixed bg-alt-black top-0 bottom-0 left-0 right-0 z-50"></div>
     
     @if (request()->is('/'))
-    <img class="fixed lg:absolute top-0 bottom-0 left-0 right-0 w-full h-screen object-top lg:h-fit fade-bottom -z-10" src="/images/theme/qhmg_dark_bg.png" alt="">
+    <img class="fixed lg:absolute top-0 bottom-0 left-0 right-0 w-full h-screen object-top lg:h-640 xl:h-681.5 fade-bottom -z-10" src="/images/theme/qhmg_dark_bg.png" alt="">
     @endif
 
     <div class="relative z-40">

@@ -1,7 +1,7 @@
 <x-layout title="Welcome" :universalData="$universalData">
     <div x-data="artistGrid({{ count($artists) }}, {{ json_encode($artists) }})" x-init="pageLoad()" class="relative min-h-215 py-24">
 
-        <img class="lg:hidden absolute w-full object-cover drop-shadow-xl lg:mt-24" src="/images/theme/scratched_silver_square_bar.png" alt="">
+        <img class="lg:hidden absolute w-full object-cover drop-shadow-xl mt-72" src="/images/theme/scratched_silver_square_bar.png" alt="">
 
         <img class="hidden lg:block absolute w-full object-cover drop-shadow-xl lg:mt-150" src="/images/theme/scratched_silver_square_bar.png" alt="">
 
@@ -42,11 +42,14 @@
                 @endforeach
             </div>
             <div class="relative mt-24">
-                <img class="h-full w-full object-cover drop-shadow-xl " src="/images/theme/silver_straight_gradient_small_angle.svg" alt="">
-                <h2 class="absolute bottom-0 left-0 right-0 max-w-5xl mx-auto pb-12 font-title font-semibold text-alt-black text-6xl">ABOUT</h2>
+                <img class="h-24 lg:h-full lg:w-full object-cover drop-shadow-xl " src="/images/theme/silver_straight_gradient_small_angle.svg" alt="">
+                <h2 class="absolute bottom-0 left-0 right-0 lg:max-w-5xl mx-auto pl-12 lg:pl-0 pb-1 lg:pb-8 xl:pb-12 font-title font-semibold text-alt-black text-4xl lg:text-6xl">ABOUT</h2>
             </div>
-            <div id="about" class="max-w-5xl mx-auto flex flex-col space-y-8 pt-12">
-                <p class="text-2xl text-secondary drop-shadow-sm">The Quartz Hill Music Group footprint includes BSB Management as well as Quartz Hill Records and Stone Country Records, both full-service country music labels. <b>Quartz Hill Records</b>, founded at the height of the pandemic in 2020, boasts an active roster comprised of chart-topping, multi-Platinum neo-traditionalist <a href="https://www.joenichols.com/" target="_blank" rel="noopener noreferrer">Joe Nichols</a>, rising, girl-next-door <a href="https://lakelinlemmings.com/" target="_blank" rel="noopener noreferrer">Lakelin Lemmings</a>, soulful country pop duo <a href="https://www.2lanesummer.com/" target="_blank" rel="noopener noreferrer">2 Lane Summer</a> and viral, genre-blending singer-songwriter <a href="https://www.tiktok.com/@realmattcooper?lang=en" target="_blank" rel="noopener noreferrer">Matt Cooper</a>. <b>Stone Country Records</b>, founded in 2021, possesses an active roster that includes celebrated country artist <a href="https://www.instagram.com/anniebosko/" target="_blank" rel="noopener noreferrer">Annie Bosko</a>, triple-threat singer, songwriter and guitarist <a href="https://www.instagram.com/ben_gallaher/" target="_blank" rel="noopener noreferrer">Ben Gallaher</a>, modern country traditionalist <a href="https://www.instagram.com/spencerhatcherofficial/" target="_blank" rel="noopener noreferrer">Spencer Hatcher</a> and soulful country newcomer Dusty Black. The <b>BSB Management</b> artist roster is home to all the above.</p>
+            <div id="about" class="max-w-5xl mx-auto flex flex-col space-y-8 px-8 lg:px-0 pt-12">
+                <p class="text-lg lg:text-2xl text-secondary drop-shadow-sm">The Quartz Hill Music Group footprint includes BSB Management as well as Quartz Hill Records and Stone Country Records, both full-service country music labels.
+                <p class="text-lg lg:text-2xl text-secondary drop-shadow-sm"><b>Quartz Hill Records</b>, founded at the height of the pandemic in 2020, boasts an active roster comprised of chart-topping, multi-Platinum neo-traditionalist <a href="https://www.joenichols.com/" target="_blank" rel="noopener noreferrer">Joe Nichols</a>, rising, girl-next-door <a href="https://lakelinlemmings.com/" target="_blank" rel="noopener noreferrer">Lakelin Lemmings</a>, soulful country pop duo <a href="https://www.2lanesummer.com/" target="_blank" rel="noopener noreferrer">2 Lane Summer</a> and viral, genre-blending singer-songwriter <a href="https://www.tiktok.com/@realmattcooper?lang=en" target="_blank" rel="noopener noreferrer">Matt Cooper</a>.
+                <p class="text-lg lg:text-2xl text-secondary drop-shadow-sm"><b>Stone Country Records</b>, founded in 2021, possesses an active roster that includes celebrated country artist <a href="https://www.instagram.com/anniebosko/" target="_blank" rel="noopener noreferrer">Annie Bosko</a>, triple-threat singer, songwriter and guitarist <a href="https://www.instagram.com/ben_gallaher/" target="_blank" rel="noopener noreferrer">Ben Gallaher</a>, modern country traditionalist <a href="https://www.instagram.com/spencerhatcherofficial/" target="_blank" rel="noopener noreferrer">Spencer Hatcher</a> and soulful country newcomer Dusty Black. 
+                <p class="text-lg lg:text-2xl text-secondary drop-shadow-sm">The <b>BSB Management</b> artist roster is home to all the above.</p>
             </div>
         </div>
     </div>
