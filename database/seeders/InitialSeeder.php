@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\SeederInfo\LabelData;
+use Database\Seeders\SeederInfo\ArtistData;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class InitialSeeder extends Seeder
 {
@@ -20,68 +22,18 @@ class InitialSeeder extends Seeder
             'password' => config('auth.admin.new-user-password'),
             'permissions' => config('auth.admin.new-user-permissions'),
         ]);
-        
-        \App\Models\Label::create([
-            'name' => 'Quartz Hill Music Group',
-            'is_sublabel' => false,
-        ]);
 
-        $qhr = \App\Models\Label::create([
-            'name' => 'Quartz Hill Records',
-            'sublabel_order' => 1,
-        ]);
+        $labelData = new LabelData();
 
-        $scr = \App\Models\Label::create([
-            'name' => 'Stone Country Records',
-            'sublabel_order' => 2,
-        ]);
+        foreach($labelData->labels as $label){
+            \App\Models\Label::create($label);
+        }
 
-        $artists = [
-            [
-                'name' => 'Joe Nichols',
-                'url' => 'https://joenichols.com',
-                'label_id' => $qhr->id,
-            ],
-            [
-                'name' => 'Matt Cooper',
-                'url' => 'https://mattcoopermusic.com',
-                'label_id' => $qhr->id,
-            ],
-            [
-                'name' => 'Ben Gallaher',
-                'url' => 'https://bengallaher.com',
-                'label_id' => $scr->id,
-            ],
-            [
-                'name' => 'Lakelin Lemmings',
-                'url' => 'https://lakelinlemmings.com',
-                'label_id' => $qhr->id,
-            ],
-            [
-                'name' => 'Spencer Hatcher',
-                'url' => 'https://spencerhatchermusic.com/',
-                'label_id' => $scr->id,
-            ],
-            [
-                'name' => '2 Lane Summer',
-                'url' => 'https://2lanesummer.com',
-                'label_id' => $qhr->id,
-            ],
-            [
-                'name' => 'Annie Bosko',
-                'url' => 'https://anniebosko.com',
-                'label_id' => $scr->id,
-            ],
-            [
-                'name' => 'Dusty Black',
-                'url' => 'https://dustyblackmusic.com',
-                'label_id' => $scr->id,
-            ],
-        ];
+        $artistData = new ArtistData();
 
         $order = 1;
 
-        foreach($artists as $artist){
+        foreach($artistData->artists as $artist){
             $slug = str_replace(' ', '-', $artist['name']);
             $slug = strtolower($slug);
             \App\Models\Artist::create([

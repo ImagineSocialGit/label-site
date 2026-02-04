@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Artist::class)->constrained()->onDelete('cascade');
+            $table->unsignedInteger('external_site_id')->nullable();
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('subtitle_one')->nullable();

@@ -15,7 +15,8 @@ return new class extends Migration
         Schema::create('music', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Artist::class)->constrained()->onDelete('cascade');
-            $table->foreignId('staging_music_id')->references('id')->on('music')->nullable();
+            $table->foreignId('staging_music_id')->nullable()->references('id')->on('music');
+            $table->unsignedInteger('external_site_id')->nullable();
             $table->string('title');
             $table->string('artwork');
             $table->string('artwork_alt_text')->nullable();
@@ -24,8 +25,8 @@ return new class extends Migration
             $table->boolean('include_in_banner')->default(false);
             $table->boolean('is_holiday_release')->default(false);
             $table->string('link')->nullable();
-            $table->date('released');
-            $table->date('presave')->nullable();
+            $table->date('release_date');
+            $table->date('presave_date')->nullable();
             $table->boolean('from_api')->default(false);
             $table->string('env')->default(config('app.env'));
             $table->timestamps();

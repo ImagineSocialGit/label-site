@@ -25,7 +25,10 @@ return new class extends Migration
             $table->text('about')->nullable();
             $table->unsignedInteger('order');
             $table->string('token')->nullable();
-            $table->boolean('requires_refresh')->default(false);
+            $table->boolean('music_requires_refresh')->default(false);
+            $table->boolean('posts_requires_refresh')->default(false);
+            $table->boolean('videos_requires_refresh')->default(false);
+            $table->boolean('design_requires_refresh')->default(false);
             $table->string('env')->default(config('app.env'));
             $table->timestamps();
         });

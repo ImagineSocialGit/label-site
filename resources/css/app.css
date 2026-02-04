@@ -9,6 +9,8 @@
 
 @theme {
     --font-title: var(--font-one);
+    --font-press: var(--font-two);
+    --font-long-text: var(--font-three);
     --color-primary: var(--color-one);
     --color-secondary: var(--color-two);
     --color-tertiary: var(--color-three);

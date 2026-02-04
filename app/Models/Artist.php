@@ -33,13 +33,13 @@ class Artist extends Model
         return $this->hasMany(Post::class);
     }
 
-    public function music() : HasOne
+    public function music() : HasMany
     {
-        return $this->hasOne(Music::class);
+        return $this->hasMany(Music::class);
     }
 
-    public function videos() : HasOne
+    public function videos() : HasMany
     {
-        return $this->hasOne(Video::class);
+        return $this->hasMany(Video::class);
     }
 }

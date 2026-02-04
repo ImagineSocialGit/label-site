@@ -16,6 +16,7 @@
                 @endforeach            
             </select>
             <input class="px-2 py-1 bg-white" type="text" name="url" value="{{ $artist->url }}">
+            <input class="px-2 py-1 bg-white" type="text" name="token" value="{{ $artist->token }}" placeholder="API Key" autocomplete="off">
             <input class="px-1 py-1 bg-white file:px-1 file:py-0.5 file:rounded file:border file:border-black file:bg-gray-200 hover:file:opacity-60 file:duration-200 cursor-pointer"
                 type="file" name="desktop_image">
             <select class="px-2 py-1 bg-white" name="desktop_image_position">
