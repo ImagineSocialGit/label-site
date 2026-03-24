@@ -39,6 +39,7 @@
             {{ $slot }}
         </div>
     </main>
+    <x-flash />
     @endif
     @auth
     <div class="fixed bottom-4 left-4 z-50">

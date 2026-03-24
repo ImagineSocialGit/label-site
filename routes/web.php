@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\MusicController;
+use App\Http\Controllers\PageStyleController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\SiteController;
@@ -27,6 +28,7 @@ Route::get('/admin-' . config('app.initials') . '/artists/add', [ArtistControlle
 Route::post('/admin-' . config('app.initials') . '/artists/add', [ArtistController::class, 'store'])->middleware('auth');
 Route::get('/admin-' . config('app.initials') . '/artists/edit/{artist:slug}', [ArtistController::class, 'edit'])->middleware('auth');
 Route::patch('/admin-' . config('app.initials') . '/artists/edit/{artist}', [ArtistController::class, 'update'])->middleware('auth');
+Route::patch('/admin-' . config('app.initials') . '/artists/{artist:slug}/pageStyles/push', [PageStyleController::class, 'push'])->middleware('auth');
 
 Route::get('/admin-' . config('app.initials') . '/artists/{artist:slug}/music', [MusicController::class, 'index'])->middleware('auth');
 Route::get('/admin-' . config('app.initials') . '/artists/{artist:slug}/music/add', [MusicController::class, 'create'])->middleware('auth');
