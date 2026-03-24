@@ -28,6 +28,7 @@ class ArtistController extends Controller
     }
 
     public function show(Artist $artist){
+
         $universalData = new UniversalData();
 
         // Refresh artist if needed
@@ -151,7 +152,7 @@ class ArtistController extends Controller
 
     public function update(Artist $artist){
         
-        $attributes = request()->validate([
+        $validated = request()->validate([
             'name' => ['required'],
             'label_id' => ['required'],
             'desktop.image' => ['image', File::types('jpg', 'jpeg', 'png')],
@@ -171,20 +172,20 @@ class ArtistController extends Controller
 
         $date = date('siH_d_m_y');
 
-        $name = str_replace(' ', '-', $attributes['name']);
+        $name = str_replace(' ', '-', $validated['name']);
         $name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
 
         $devices = ['desktop', 'mobile'];
         $deviceAttributesMap = [];
         foreach ($devices as $device){
-            if ($attributes[$device]['image_use_custom_position'] == 0){
-                $attributes[$device]['image_custom_position_x'] = null;
-                $attributes[$device]['image_custom_position_y'] = null;
+            if ($validated[$device]['image_use_custom_position'] == 0){
+                $validated[$device]['image_custom_position_x'] = null;
+                $validated[$device]['image_custom_position_y'] = null;
             }
 
-            unset($attributes[$device]['image_use_custom_position']);
+            unset($validated[$device]['image_use_custom_position']);
 
-            $deviceAttributesMap[$device] = $attributes[$device];
+            $deviceAttributesMap[$device] = $validated[$device];
 
             if(isset($deviceAttributesMap[$device]['image'])){
                 $type = '.' . explode('/', request()->file($device . '.image')->getClientMimeType())[1];
@@ -230,11 +231,11 @@ class ArtistController extends Controller
 
         }
 
-        if (isset($attributes['token'])){
-            $attributes['music_requires_refresh'] = true;
-            $attributes['posts_requires_refresh'] = true;
-            $attributes['videos_requires_refresh'] = true;
-            $attributes['design_requires_refresh'] = true;
+        if (isset($validated['token'])){
+            $validated['music_requires_refresh'] = true;
+            $validated['posts_requires_refresh'] = true;
+            $validated['videos_requires_refresh'] = true;
+            $validated['design_requires_refresh'] = true;
         }
 
         $previousImageData = null;
@@ -271,7 +272,7 @@ class ArtistController extends Controller
             }
         }
 
-        $artist->update($attributes);
+        $artist->update($validated);
 
         foreach ($deviceAttributesMap as $device => $attributes) {
             $attributes['env'] = config('app.env');
@@ -279,6 +280,11 @@ class ArtistController extends Controller
                 $artist->pageStyleForDevice($device)->update($attributes);
             }
         }
+
+        return redirect('/' . $artist->slug)->with('success', 'Artist Updated');
+    }
+
+    public function push(Artist $artist){
 
         return redirect('/' . $artist->slug)->with('success', 'Artist Updated');
     }

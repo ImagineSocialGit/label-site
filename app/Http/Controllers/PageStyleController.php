@@ -13,7 +13,6 @@ class PageStyleController extends Controller
         $sourceEnv = config('app.env');
         $targetEnv = 'production';
 
-
         // Fetch all page styles for the artist in the source environment
         $sourceStyles = $artist->pageStyles($sourceEnv)->get();
 

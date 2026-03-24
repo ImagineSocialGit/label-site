@@ -26,7 +26,6 @@ return new class extends Migration
             $table->boolean('posts_requires_refresh')->default(true);
             $table->boolean('videos_requires_refresh')->default(true);
             $table->boolean('design_requires_refresh')->default(true);
-            $table->string('env')->default(config('app.env'));
             $table->timestamps();
         });
     }
