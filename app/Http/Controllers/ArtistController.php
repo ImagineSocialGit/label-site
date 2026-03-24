@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
-use App\Models\Label;
-use App\Models\Artist;
-use Illuminate\Http\Request;
 use App\Classes\RefreshArtist;
 use App\Classes\UniversalData;
-use Illuminate\Validation\Rules\File;
+use App\Models\Artist;
+use App\Models\Label;
+use App\Models\Post;
+use App\Services\PageStyleService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\File;
+use Nette\Utils\Image;
 
 class ArtistController extends Controller
 {
@@ -28,28 +30,19 @@ class ArtistController extends Controller
     public function show(Artist $artist){
         $universalData = new UniversalData();
 
-        if ($artist->token){
-                
-            $refreshArtist = new RefreshArtist($artist);
-            
-            if ($artist->music_requires_refresh){
-                $refreshArtist->fetchMusic();
-            }
-            if ($artist->posts_requires_refresh){
-                $refreshArtist->fetchPosts();
-            }
-            if ($artist->videos_requires_refresh){
-
-            }
-            if ($artist->design_requires_refresh){
-
-            }
+        // Refresh artist if needed
+        if ($artist->token && $artist->requiresRefresh()) {
+            (new RefreshArtist($artist))->refresh($artist->refreshFlags());
         }
 
-        $musicItems = $artist->music->sortByDesc('released');
+        $pageStyleService = new PageStyleService($artist);
+
+        $styles = $pageStyleService->getStylesByDevice();
+
+        $musicItems = $artist->music->sortByDesc('release_date');
 
         foreach($musicItems as $music){
-            if ($music->isReleased()){
+            if ($music->isPresave() || $music->isReleased()){
                 $featuredRelease = $music;
                 break;
             }
@@ -59,52 +52,26 @@ class ArtistController extends Controller
             $featuredRelease = null;
         }
 
+        if ($universalData->showLivePosts){
+            $artist->load(['posts' => function ($query) {
+                $query->where(function ($q) {
+                    $q->where('env', 'production');
+                });
+            }]);
+        } else {
+            $artist->load(['posts' => function ($query) {
+                $query->where(function ($q) {
+                    $q->where('env', config('app.env'))
+                    ->orWhereNotNull('external_site_id');
+                });
+            }]);
+        }
+
         return view('artists.show', [
             'universalData' => $universalData,
             'artist' => $artist,
+            'styles' => $styles,
             'featuredRelease' => $featuredRelease,
-        ]);
-    }
-
-    public function showPost(Artist $artist, Post $post){
-
-        $universalData = new UniversalData();
-
-        //Do paragraphs
-        $bodyArray = explode("\r\n", $post->body);
-        $modifiedBody = '';
-
-        foreach ($bodyArray as $paragraph){
-            if (strlen($paragraph) > 1){
-                $paragraph = '<p>' . $paragraph . '</p>';
-                $modifiedBody .= $paragraph;
-            }
-        }
-
-        $post->body = $modifiedBody;
-
-        //Do links
-
-        $post->title = str_replace('<link=', '<a class="underline" href=', $post->title);
-        $post->title = str_replace('</link>', '</a>', $post->title);
-
-        $post->body = str_replace('<link=', '<a class="underline" href=', $post->body);
-        $post->body = str_replace('</link>', '</a>', $post->body);
-
-        if ($post->subtitle_one){
-            $post->subtitle_one = str_replace('<link=', '<a class="underline" href=', $post->subtitle_one);
-            $post->subtitle_one = str_replace('</link>', '</a>', $post->subtitle_one);
-        }
-
-        if ($post->subtitle_two){
-            $post->subtitle_two = str_replace('<link=', '<a class="underline" href=', $post->subtitle_two);
-            $post->subtitle_two = str_replace('</link>', '</a>', $post->subtitle_two);
-        }
-
-        return view('artists.post', [
-            'universalData' => $universalData,
-            'artist' => $artist,
-            'post' => $post,
         ]);
     }
 
@@ -187,10 +154,16 @@ class ArtistController extends Controller
         $attributes = request()->validate([
             'name' => ['required'],
             'label_id' => ['required'],
-            'desktop_image' => ['image', File::types('jpg', 'jpeg', 'png')],
-            'desktop_image_position' => ['nullable'],
-            'mobile_image' => ['image', File::types('jpg', 'jpeg', 'png')],
-            'mobile_image_position' => ['nullable'],
+            'desktop.image' => ['image', File::types('jpg', 'jpeg', 'png')],
+            'desktop.image_position' => ['nullable'],
+            'desktop.image_use_custom_position' => ['required'],
+            'desktop.image_custom_position_x' => ['exclude_unless:desktop.image_use_custom_position,1', 'nullable'],
+            'desktop.image_custom_position_y' => ['exclude_unless:desktop.image_use_custom_position,1', 'nullable'],
+            'mobile.image' => ['image', File::types('jpg', 'jpeg', 'png')],
+            'mobile.image_position' => ['nullable'],
+            'mobile.image_use_custom_position' => ['required'],
+            'mobile.image_custom_position_x' => ['exclude_unless:mobile.image_use_custom_position,1', 'nullable'],
+            'mobile.image_custom_position_y' => ['exclude_unless:mobile.image_use_custom_position,1', 'nullable'],
             'url' => ['required'],
             'token' => ['nullable'],
             'about' => ['required'],
@@ -201,38 +174,111 @@ class ArtistController extends Controller
         $name = str_replace(' ', '-', $attributes['name']);
         $name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
 
-        if(isset($attributes['desktop_image'])){
-            
-            $type = explode('/', request()->file('desktop_image')->getClientMimeType())[1];
-            $name = $name . '-desktop-' . $date . '.' . $type;
-
-            $uploaded = Storage::putFileAs(config('app.name') . '/uploads/artists', request()->file('desktop_image'), $name, 'public');
-
-            if ($uploaded){
-                $attributes['desktop_image'] = '/uploads/artists/' . $name;
+        $devices = ['desktop', 'mobile'];
+        $deviceAttributesMap = [];
+        foreach ($devices as $device){
+            if ($attributes[$device]['image_use_custom_position'] == 0){
+                $attributes[$device]['image_custom_position_x'] = null;
+                $attributes[$device]['image_custom_position_y'] = null;
             }
+
+            unset($attributes[$device]['image_use_custom_position']);
+
+            $deviceAttributesMap[$device] = $attributes[$device];
+
+            if(isset($deviceAttributesMap[$device]['image'])){
+                $type = '.' . explode('/', request()->file($device . '.image')->getClientMimeType())[1];
+
+                $dir = '/' . $artist->slug . '_' . $device . '_background_' . $date;
+
+                $file = request()->file($device . '.image');
+
+                $images = [];
+
+                $image = Image::fromFile($file);
+                $imageToEdit = Image::fromFile($file);
+                
+                $images['default'] = $image;
+
+                $images['medium'] = $imageToEdit->resize(500, 500);
+
+                $directories = Storage::disk('public')->directories();
+
+                if (!in_array('uploaded', $directories)){
+                    Storage::disk('public')->makeDirectory('uploaded');
+                }
+
+                $images['default']->save(config('filesystems.disks.public.root') . '/uploaded/default' . $type);
+                $images['medium']->save(config('filesystems.disks.public.root') . '/uploaded/medium' . $type);
+
+                $defaultContents = Storage::disk('public')->get('uploaded/default' . $type);
+                $mediumContents = Storage::disk('public')->get('uploaded/medium' . $type);
+
+                $name = 'default' . $type;
+                $uploaded = Storage::put(config('app.live-site-url') . '/uploads' . $dir . '/' . $name, $defaultContents);
+
+                $name = 'medium' . $type;
+                $uploaded = Storage::put(config('app.live-site-url') . '/uploads' . $dir . '/' . $name, $mediumContents);
+
+                if ($uploaded){
+                    $deviceAttributesMap[$device]['image'] = config('filesystems.disks.spaces.url') . '/uploads' . $dir;
+                    $deviceAttributesMap[$device]['image_extension'] = $type;
+                    Storage::disk('public')->delete('uploaded/default' . $type);
+                    Storage::disk('public')->delete('uploaded/medium' . $type);
+                }
+            }
+
         }
 
-        if(isset($attributes['mobile_image'])){
-            
-            $type = explode('/', request()->file('mobile_image')->getClientMimeType())[1];
-            $name = $name . '-mobile-' . $date . '.' . $type;
-
-            $uploaded = Storage::putFileAs(config('app.name') . '/uploads/artists', request()->file('mobile_image'), $name, 'public');
-
-            if ($uploaded){
-                $attributes['mobile_image'] = '/uploads/artists/' . $name;
-            }
-        }
-        
         if (isset($attributes['token'])){
             $attributes['music_requires_refresh'] = true;
             $attributes['posts_requires_refresh'] = true;
             $attributes['videos_requires_refresh'] = true;
             $attributes['design_requires_refresh'] = true;
         }
-                
+
+        $previousImageData = null;
+
+        foreach ($deviceAttributesMap as $device => $attributes) {
+
+            // Get existing style for this device (current env by default)
+            $existingStyle = $artist->pageStyleForDevice($device)->first();
+
+            $hasNewImage = !empty($attributes['image']);
+            $hasExistingImage = $existingStyle && $existingStyle->image;
+
+            // If no new image AND no existing image → fallback to previous device
+            if (!$hasNewImage && !$hasExistingImage && $previousImageData) {
+                $attributes['image'] = $previousImageData['image'] ?? null;
+                $attributes['image_extension'] = $previousImageData['image_extension'] ?? null;
+            }
+
+            if ($attributes) {
+                $artist->pageStyleForDevice($device)->update($attributes);
+            }
+
+            // Update previous image tracker (priority: new > existing > fallback)
+            if (!empty($attributes['image'])) {
+                $previousImageData = [
+                    'image' => $attributes['image'],
+                    'image_extension' => $attributes['image_extension'] ?? null,
+                ];
+            } elseif ($hasExistingImage) {
+                $previousImageData = [
+                    'image' => $existingStyle->image,
+                    'image_extension' => $existingStyle->image_extension,
+                ];
+            }
+        }
+
         $artist->update($attributes);
+
+        foreach ($deviceAttributesMap as $device => $attributes) {
+            $attributes['env'] = config('app.env');
+            if ($attributes) {
+                $artist->pageStyleForDevice($device)->update($attributes);
+            }
+        }
 
         return redirect('/' . $artist->slug)->with('success', 'Artist Updated');
     }

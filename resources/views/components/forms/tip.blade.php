@@ -1,0 +1,1 @@
+<span x-show="showTip" class="absolute -top-9 whitespace-nowrap bg-white border rounded p-1 cursor-default">{{$slot}}</span>

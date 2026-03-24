@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Favicon extends Model
 {
-    //
+    protected $guarded = [];
 }

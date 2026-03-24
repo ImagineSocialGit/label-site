@@ -2,10 +2,11 @@
 
 namespace App\Classes;
 
-use App\Models\Label;
 use App\Models\Favicon;
-use App\Models\MetaData;
+use App\Models\Label;
 use App\Models\LegalPage;
+use App\Models\MetaData;
+use App\Models\SiteSettings;
 
 
 
@@ -18,6 +19,8 @@ class UniversalData
 
     public $labels;
 
+    public $showLivePosts = false;
+
     public function __construct() {
         
         $this->favicon = Favicon::first();
@@ -25,6 +28,9 @@ class UniversalData
         $this->legalPages = LegalPage::all();
         
         $this->labels = Label::all();
+
+        $siteSettings = SiteSettings::first();
+        $showLivePosts = $siteSettings->display_live_posts_on_staging;
 
     }
 

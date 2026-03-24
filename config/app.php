@@ -55,6 +55,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'live-site-url' => env('LIVE_SITE_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------

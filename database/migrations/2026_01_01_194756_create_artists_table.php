@@ -12,23 +12,20 @@ return new class extends Migration
      */
     public function up(): void
     {
+
         Schema::create('artists', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Label::class)->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('slug')->unique();
-            $table->string('desktop_image')->nullable();
-            $table->string('desktop_image_position')->nullable();
-            $table->string('mobile_image')->nullable();
-            $table->string('mobile_image_position')->nullable();
             $table->string('url')->nullable();
             $table->text('about')->nullable();
             $table->unsignedInteger('order');
             $table->string('token')->nullable();
-            $table->boolean('music_requires_refresh')->default(false);
-            $table->boolean('posts_requires_refresh')->default(false);
-            $table->boolean('videos_requires_refresh')->default(false);
-            $table->boolean('design_requires_refresh')->default(false);
+            $table->boolean('music_requires_refresh')->default(true);
+            $table->boolean('posts_requires_refresh')->default(true);
+            $table->boolean('videos_requires_refresh')->default(true);
+            $table->boolean('design_requires_refresh')->default(true);
             $table->string('env')->default(config('app.env'));
             $table->timestamps();
         });

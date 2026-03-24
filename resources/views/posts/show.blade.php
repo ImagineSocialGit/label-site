@@ -1,6 +1,6 @@
 <x-layout title="{{ config('app.site-name') }} | {{ $post->title }}" :universalData="$universalData">
 
-    <div class="relative lg:max-w-5xl xl:max-w-6xl mx-4 lg:mx-auto pt-56 lg:pt-72 pb-12 lg:pb-24">
+    <div class="relative lg:max-w-5xl xl:max-w-6xl mx-6 lg:mx-auto pt-56 lg:pt-72 pb-12 lg:pb-24">
         <div class="hidden lg:block space-y-8 text-alt-white">
             <div class="flex flex-col">
                 <h1 class="max-w-4xl mx-auto text-4xl pb-4 font-semibold text-center font-title">{!! $post->title !!}</h1>

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Artist;
-use Illuminate\Http\Request;
 use App\Classes\RefreshArtist;
 use App\Classes\UniversalData;
+use App\Models\Artist;
+use App\Services\PageStyleService;
+use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
@@ -13,7 +14,9 @@ class SiteController extends Controller
 
         $universalData = new UniversalData();
 
-        $artists = Artist::all();
+        $artists = Artist::with('label')->get();
+
+        $styles = [];
 
         foreach($artists as $artist){
             if ($artist->token){
@@ -33,10 +36,13 @@ class SiteController extends Controller
 
                 }
             }
+            $pageStyleService = new PageStyleService($artist);
+            $styles[$artist->name] = $pageStyleService->getStylesByDevice();
         }
 
         return view('welcome', [
             'artists' => $artists,
+            'styles' => $styles,
             'universalData' => $universalData,
         ]);
     }

@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('artwork_alt_text')->nullable();
             $table->string('banner_image')->nullable();
             $table->string('banner_image_alt_text')->nullable();
-            $table->boolean('include_in_banner')->default(false);
             $table->boolean('is_holiday_release')->default(false);
             $table->string('link')->nullable();
             $table->date('release_date');

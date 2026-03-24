@@ -1,5 +1,5 @@
-@import "../../public/theme/fonts.css";
-@import "../../public/theme/colors.css";
+@import "./theme/fonts.css";
+@import "./theme/colors.css";
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -16,6 +16,10 @@
     --color-tertiary: var(--color-three);
     --color-alt-black: var(--color-new-black);
     --color-alt-white: var(--color-new-white);
+    --object-position-right-fourth : 75% 100%;
+    --object-position-right-third : 65% 100%;
+    --object-position-left-third : 35% 100%;
+    --object-position-left-fourth : 25% 100%;
 }
 
 .scrollbar-hide::-webkit-scrollbar  {
@@ -33,4 +37,15 @@
         -webkit-mask: linear-gradient(180deg, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 91%);
         mask: linear-gradient(180deg, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 91%);
     }
+}
+
+.blur-up[data-src] {
+    -webkit-filter: blur(5px);
+    filter: blur(5px);
+    transition: filter 400ms, -webkit-filter 400ms;
+}
+
+.blur-up.lazyload { 
+    -webkit-filter: blur(0);
+    filter: blur(0);
 }

@@ -12,4 +12,9 @@ class Video extends Model
     {
         return $this->belongsTo(Artist::class);
     }
+
+    public function scopeStaging($query)
+    {
+        return $query->where('env', 'staging');
+    }
 }

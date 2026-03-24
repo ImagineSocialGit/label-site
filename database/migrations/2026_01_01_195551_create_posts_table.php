@@ -17,11 +17,12 @@ return new class extends Migration
             $table->foreignIdFor(Artist::class)->constrained()->onDelete('cascade');
             $table->unsignedInteger('external_site_id')->nullable();
             $table->string('title');
-            $table->string('slug')->unique();
+            $table->string('slug');
             $table->string('subtitle_one')->nullable();
             $table->string('subtitle_two')->nullable();
             $table->string('image')->nullable();
             $table->string('image_alt_text')->nullable();
+            $table->string('image_position')->nullable();
             $table->text('body');
             $table->dateTime('publish_date');
             $table->boolean('from_api')->default(false);
