@@ -11,12 +11,18 @@ class Artist extends Model
 {
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    // Cast boolean fields for convenience
+    protected $hidden = [
+        'token',
+    ];
+
     protected $casts = [
         'music_requires_refresh' => 'boolean',
         'posts_requires_refresh' => 'boolean',
         'videos_requires_refresh' => 'boolean',
         'design_requires_refresh' => 'boolean',
+        'syndication_enabled' => 'boolean',
+        'syndication_last_attempt_at' => 'datetime',
+        'syndication_last_success_at' => 'datetime',
     ];
 
     // ------------------------------
@@ -89,7 +95,8 @@ class Artist extends Model
 
         return $this->hasOne(PageStyle::class)
                     ->where('device_type', $device)
-                    ->where('env', $env);
+                    ->where('env', $env)
+                    ->where('from_api', false);
     }
 
     public function socials(): HasMany

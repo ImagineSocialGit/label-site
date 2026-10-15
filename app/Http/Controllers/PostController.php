@@ -21,7 +21,7 @@ class PostController extends Controller
         $artist->load(['posts' => function ($query) {
             $query->where(function ($q) {
                 $q->where('env', config('app.env'))
-                ->orWhereNotNull('external_site_id');
+                ->orWhere('from_api', true);
             });
         }]);
 
@@ -132,8 +132,12 @@ class PostController extends Controller
             $thumbnail = "https://img.youtube.com/vi/$videoId/maxresdefault.jpg";
 
             $post->image = $thumbnail;
-        } else {
-            $post->image = config('filesystems.disks.spaces.url') . $post->image;
+        } elseif (
+            $post->image
+            && ! str_starts_with($post->image, 'http://')
+            && ! str_starts_with($post->image, 'https://')
+        ) {
+            $post->image = config('filesystems.disks.spaces.url').$post->image;
         }
 
         return view('posts.show', [
@@ -284,7 +288,7 @@ class PostController extends Controller
             return back()->with('failure', 'Cannot push from live site!');
         }
 
-        foreach ($artist->posts->where('external_site_id', null) as $post){
+        foreach ($artist->posts->where('from_api', false) as $post){
             $productionPost = Post::where('env', 'production')->where('slug', $post->slug)->first();
 
             if ($productionPost){

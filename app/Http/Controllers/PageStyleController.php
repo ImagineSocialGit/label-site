@@ -14,7 +14,7 @@ class PageStyleController extends Controller
         $targetEnv = 'production';
 
         // Fetch all page styles for the artist in the source environment
-        $sourceStyles = $artist->pageStyles($sourceEnv)->get();
+        $sourceStyles = $artist->pageStyles($sourceEnv)->where('from_api', false)->get();
 
         foreach ($sourceStyles as $style) {
             // Find existing style for the same device in the target env, or create a new one

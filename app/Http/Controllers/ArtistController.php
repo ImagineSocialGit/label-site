@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\RefreshArtist;
 use App\Classes\UniversalData;
 use App\Models\Artist;
 use App\Models\Label;
-use App\Models\Post;
 use App\Services\PageStyleService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\File;
 use Nette\Utils\Image;
@@ -30,11 +27,6 @@ class ArtistController extends Controller
     public function show(Artist $artist){
 
         $universalData = new UniversalData();
-
-        // Refresh artist if needed
-        if ($artist->token && $artist->requiresRefresh()) {
-            (new RefreshArtist($artist))->refresh($artist->refreshFlags());
-        }
 
         $pageStyleService = new PageStyleService($artist);
 
@@ -63,7 +55,7 @@ class ArtistController extends Controller
             $artist->load(['posts' => function ($query) {
                 $query->where(function ($q) {
                     $q->where('env', config('app.env'))
-                    ->orWhereNotNull('external_site_id');
+                    ->orWhere('from_api', true);
                 });
             }]);
         }
@@ -231,11 +223,21 @@ class ArtistController extends Controller
 
         }
 
-        if (isset($validated['token'])){
-            $validated['music_requires_refresh'] = true;
-            $validated['posts_requires_refresh'] = true;
-            $validated['videos_requires_refresh'] = true;
-            $validated['design_requires_refresh'] = true;
+        if (array_key_exists('token', $validated)) {
+            $normalizedToken = trim((string) ($validated['token'] ?? ''));
+            $normalizedToken = $normalizedToken === '' ? null : $normalizedToken;
+
+            if ($normalizedToken !== $artist->token) {
+                $validated['token'] = $normalizedToken;
+                $validated['syndication_revision'] = null;
+                $validated['syndication_last_error'] = null;
+
+                if ($normalizedToken === null) {
+                    $validated['syndication_enabled'] = false;
+                } elseif ($artist->token === null) {
+                    $validated['syndication_enabled'] = true;
+                }
+            }
         }
 
         $previousImageData = null;

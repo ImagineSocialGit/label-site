@@ -27,7 +27,7 @@ class Post extends Model
     {
         return static::where('slug', $this->slug)
                 ->where('env', 'production')
-                ->where('external_site_id', null)
+                ->where('from_api', false)
                 ->exists();
     }
 
