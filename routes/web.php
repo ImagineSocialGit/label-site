@@ -4,11 +4,15 @@ use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\MusicController;
 use App\Http\Controllers\PageStyleController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PublishedContentChangedController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [SiteController::class, 'index'])->middleware('staging.auth');
+
+Route::post('/api/v1/published-content-changed', PublishedContentChangedController::class)
+    ->name('api.v1.published-content-changed');
 
 Route::get('/error', function(){
     return view('error');

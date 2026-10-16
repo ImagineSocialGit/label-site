@@ -23,6 +23,12 @@ return Application::configure(basePath: dirname(__DIR__))
             ->withoutOverlapping();
     })
     ->withMiddleware(function (Middleware $middleware) {
+        // The authenticated Artist Sites callback is server-to-server and
+        // cannot send a browser session CSRF token.
+        $middleware->validateCsrfTokens(except: [
+            'api/v1/published-content-changed',
+        ]);
+
         $middleware->redirectGuestsTo('/error');
         $middleware->alias([
             'staging.auth' => ForceStagingLogin::class,
